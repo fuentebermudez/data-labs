@@ -1,0 +1,14 @@
+SELECT
+	authors.au_id as AUTHOR_ID,
+    au_lname as LAST_NAME,
+    au_fname as FIRST_NAME,
+    titles.title as TITLE,
+    publishers.pub_name as PUBLISHER
+    FROM 
+    authors 
+    JOIN 
+		titleauthor on authors.au_id=titleauthor.au_id 
+    JOIN 
+		titles on titles.title_id=titleauthor.title_id 
+    JOIN 
+		publishers on publishers.pub_id=titles.pub_id;
