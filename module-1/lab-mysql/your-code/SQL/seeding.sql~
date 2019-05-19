@@ -1,0 +1,2 @@
+
+insert into Car (ID,idCar,Manufacturer,Model,Year,Color,Purchase_price,Sale_price,idStore,idItem,Purchase_Currency,Sale_Currency) VALUES(1,'C0001','FORD','Mustang Shelby','1970','Red','150000','200000',1,1,'US-D','EURO');
