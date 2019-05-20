@@ -1,14 +1,17 @@
 
 INSERT INTO
        Car
-       (ID,idCar,Manufacturer,Model,Year,Color,Purchase_price,Sale_price,idStore,idItem,Purchase_Currency,Sale_Currency)
+       (ID,VIN,Manufacturer,Model,Year,Color,Purchase_price,Sale_price,idStore,idItem,Purchase_Currency,Sale_Currency)
        VALUES
-       (1,'C0001','FORD','Mustang Shelby','1970','Red','150000','200000',1,1,'US-D','EURO'),
-       (2,'C0002','FORD','Capri','1980','White','6000','10000',1,2,'US-D','EURO'),
-       (3,'C0003','FORD','T','1910','White','500000','1000000',1,3,'US-D','EURO'),
-       (4,'C0004','SEAT','Ibiza','1995','Green','6000','10000',2,4,'EURO','EURO'),
-       (5,'C0005','VOLKSWAGEN','Golf','1995','White','10000','15000',2,5,'EURO','EURO');
+       ('0','3K096I98581DHSNUP','Volkswagen','Tiguan','2019','Blue','10000','20000',1,1,'EURO','EURO'),
+       ('1','ZM8G7BEUQZ97IH46V','Peugeot','Rifter','2019','Red','10000','20000',1,1,'EURO','EURO'),
+       ('2','RKXVNNIHLVVZOUB4M','Ford ','Fusion','2018 ','White','10000','20000',2,3,'EURO','EURO'),
+       ('3','HKNDGS7CU31E9Z7JW','Toyota','RAV4','2018','Silver','10000','20000',2,3,'EURO','EURO'),
+       ('4','DAM41UDN3CHU2WVF6','Volvo','V60','2019','Gray','10000','20000',3,2,'EURO','EURO'),
+       ('5','DAM41UDN3CHU2WXF6','Volvo','V60 Cross Country','2019','Gray','10000','20000',3,2,'EURO','EURO')
+
        ;
+--He modificado un VIN porque al establecer está columna como clave primaria no me permitía que tuviera duplicados.
 
 INSERT INTO Store
        (ID,idStore,Address,City,State)
@@ -20,23 +23,28 @@ INSERT INTO Store
 insert into Item
        (ID,idItem,Quantity,idCar,idInvoices,Promotion)
        VALUES
-       (1,1,1,1,1,0),
-       (2,2,1,2,1,0),
-       (3,3,1,3,1,0),
-       (4,4,2,4,2,0.25),
-       (5,5,1,5,2,0);
+       (1,1,1,1,852399038,0),
+       (2,2,1,2,852399038,0),
+       (3,3,1,3,731166526,0),
+       (4,4,2,4,731166526,0.25),
+       (5,5,1,5,271135104,0);
+
 
 insert into Invoice
        (ID,idInvoices,Date,idSalesPerson,idCustomer)
        values
-       (1,1,curdate(),1,1),
-       (2,2,curdate(),2,2);
+       (0,852399038,'2018-08-22',0,1),
+       (1,731166526,'2018-12-31',3,0),
+       (2,271135104,'2019-01-22',2,2);  
        
-
-insert into Customer
-       (ID,idCustomer,Name,Phone_Number,E-mail,Address,City,State,Country,Zip_Code)
+INSERT INTO  customer 
+       (ID,idCustomer,Name,Phone_Number,Email,Address,City,State,Country,Zip_Code)
        VALUES
+       (0,10001,'Pablo Picasso','+34 636 17 63 82','-','Paseo de la Chopera 14','Madrid','Madrid','Spain','28045'),
+       (1,20001,'Abraham Lincoln','+1 305 907 7086','-','120 SW 8th St','Miami','Florida','United States','33130'),
+       (2,30001,'Napoléon Bonaparte','+33 1 79 75 40 00','-','40 Rue du Colisée','Paris','Île-de-France','France','775008')
+       
+       ;
 
-(0,10001,Pablo Picasso,+34 636 17 63 82,-,Paseo de la Chopera 14,Madrid,Madrid,Spain,28045),
-(1,20001,Abraham Lincoln,+1 305 907 7086,-,120 SW 8th St,Miami,Florida,United States,33130)
-(2,30001,Napoléon Bonaparte,+33 1 79 75 40 00,-,40 Rue du Colisée,Paris,Île-de-France,France,775008)
+
+
