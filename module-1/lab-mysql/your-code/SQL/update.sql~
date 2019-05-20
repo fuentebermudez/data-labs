@@ -1,2 +1,0 @@
- update salesperson set store="Miami" where Name="Paige Turner";
-
