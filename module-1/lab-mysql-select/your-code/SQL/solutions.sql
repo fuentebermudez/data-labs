@@ -81,3 +81,26 @@ SELECT
 	GROUP BY
 		authors.au_id
     ORDER BY sum(titles.ytd_sales) DESC ;
+
+----------------------------------------------------------------------
+--BONUS CHALLENGE
+----------------------------------------------------------------------
+
+
+
+SELECT
+	authors.au_id as AUTHOR_ID,
+   	au_lname as LAST_NAME,
+    	au_fname as FIRST_NAME,
+    	(sum(titles.royalty)*(titleauthor.royaltyper/100)) + sum(titles.advance) as PROFIT --Entiendo que royaltyper es un porcentaje del total del royalty
+    
+    FROM 
+    authors 
+    JOIN 
+		titleauthor on authors.au_id=titleauthor.au_id 
+    JOIN 
+		titles on titles.title_id=titleauthor.title_id 
+        
+	GROUP BY
+		authors.au_id
+ORDER BY sum(titles.ytd_sales) DESC limit 3;
