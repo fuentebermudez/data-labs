@@ -16,10 +16,9 @@ class Tree(object):
     def add_child(self, node):
         assert isinstance(node, Tree)
         self.children.append(node)
-
-arbol=Tree()
-
-
+    def return_children(self):
+        return repr(self.children)
+    
 
 
 def posicionesLibres(tablero):
@@ -51,18 +50,20 @@ def cambiaJugador(jugador):
     if jugador=="X":
         jugador="O"
     else:
-        jugador="O"
-    
+        jugador="X"
+    return jugador
 
 def rellenaArbol (jugada,jugador,arbol):
-    Jugadas=siguientesJuagadas(jugada)
-    
+    Jugadas=siguientesJuagadas(jugada,jugador)
+    print(Jugadas)
     if Jugadas.count>0:
     
         for jugada in Jugadas:
             nodoJugada=Tree(jugada)
             arbol.add_child(nodoJugada)
+            jugador=cambiaJugador(jugador)
             rellenaArbol(jugada,jugador,nodoJugada)
+            
         
 ######################################################################
 #Main
@@ -70,10 +71,11 @@ def rellenaArbol (jugada,jugador,arbol):
 
 
         
-jugada = [["X","X","X"], ["O","-","-"], ["-","-","-"]]
+jugada = [["X","O","X"], ["O","X","O"], ["-","-","-"]]
 
 arbol=Tree(jugada)
 
 rellenaArbol(jugada,"X",arbol)
 
-arbol.children.count()
+
+
