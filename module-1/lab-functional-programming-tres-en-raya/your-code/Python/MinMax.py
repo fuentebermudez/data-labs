@@ -1,11 +1,11 @@
 import pdb
-pdb.set_trace()
+#pdb.set_trace()
 
 import copy
 
 class Tree(object):
     "Generic tree node."
-    def __init__(self, name=[], children=None):
+    def __init__(self, name="", children=None):
         self.name = name
         self.children = []
         if children is not None:
@@ -19,8 +19,7 @@ class Tree(object):
 
 arbol=Tree()
 
-tableroZero = [["X","X","X"], ["O","X","-"], ["-","-","X"]]
-arbol=Tree(tableroZero)
+
 
 
 def posicionesLibres(tablero):
@@ -37,7 +36,7 @@ def posicionesLibres(tablero):
     
 
 def siguientesJuagadas(tablero,jugador="X"):
-    estados=[]
+    Jugadas=[]
     libres=posicionesLibres(tablero)
     
     for posicion in libres:
@@ -45,8 +44,36 @@ def siguientesJuagadas(tablero,jugador="X"):
         fila=posicion[0]
         columna=posicion[1]
         tableroNext[fila][columna]=jugador
-        estados.append(tableroNext)
-    return estados
+        Jugadas.append(tableroNext)
+    return Jugadas
 
-Estados=siguientesJuagadas(tableroZero)
-print(Estados)
+def cambiaJugador(jugador):
+    if jugador=="X":
+        jugador="O"
+    else:
+        jugador="O"
+    
+
+def rellenaArbol (jugada,jugador,arbol):
+    Jugadas=siguientesJuagadas(jugada)
+    
+    if Jugadas.count>0:
+    
+        for jugada in Jugadas:
+            nodoJugada=Tree(jugada)
+            arbol.add_child(nodoJugada)
+            rellenaArbol(jugada,jugador,nodoJugada)
+        
+######################################################################
+#Main
+######################################################################
+
+
+        
+jugada = [["X","X","X"], ["O","-","-"], ["-","-","-"]]
+
+arbol=Tree(jugada)
+
+rellenaArbol(jugada,"X",arbol)
+
+arbol.children.count()
