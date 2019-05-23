@@ -11,14 +11,13 @@ class Tree(object):
         if children is not None:
             for child in children:
                 self.add_child(child)
-    def __repr__(self):
-        return self.name
+    #def __repr__(self):
+    #    return self.name
     def add_child(self, node):
         assert isinstance(node, Tree)
         self.children.append(node)
-    def return_children(self):
-        return repr(self.children)
-    
+        
+
 
 
 def posicionesLibres(tablero):
@@ -77,5 +76,6 @@ arbol=Tree(jugada)
 
 rellenaArbol(jugada,"X",arbol)
 
-
+for name in arbol.children:
+    print(name.name)
 
