@@ -3,8 +3,8 @@
 ----------------------------------------------------------------------
 SELECT
 	ta.title_id,
-    	ta.au_id,
-    	t.price*s.qty*(t.royalty/100)*(ta.royaltyper/100)
+    ta.au_id,
+    t.price*s.qty*(t.royalty/100)*(ta.royaltyper/100)
     
 FROM 
 	sales s
@@ -19,4 +19,30 @@ FROM
     join 
 	authors a 
     on ta.au_id=a.au_id
+
+----------------------------------------------------------------------
+--STEP 
+----------------------------------------------------------------------
+create temporary table ProffitByTitle
+SELECT
+    ta.title_id title_id,
+    ta.au_id au_id,
+    t.price*s.qty*(t.royalty/100)*(ta.royaltyper/100) ProfitTitle
+    
+FROM 
+	sales s
+    JOIN
+	titles t
+    	on
+	s.title_id=t.title_id
+    JOIN
+	titleauthor ta
+    	on
+	ta.title_id=t.title_id
+    join 
+	authors a 
+    on ta.au_id=a.au_id
+
+
+select  from ProffitByTitle;
 
