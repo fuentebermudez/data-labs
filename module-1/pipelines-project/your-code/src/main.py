@@ -1,30 +1,23 @@
 import matplotlib
-matplotlib.use('TkAgg')
-
-
+import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 from Extractor import ExtractRings
 from Transformer import TransformRings
+from Analyzer import AnalyzeRings
 
 
 er=ExtractRings()
 tr=TransformRings()
+an=AnalyzeRings()
 
 raw_data=er.Extract (path='../data/spai067-1.rwl',encoding='UTF-8')
 
 data_frame=tr.Transform(raw_data)
 
-primera_serie=data_frame[:0]
+result = an.statistics(data_frame=data_frame)
 
-years=primera_serie.index
-measurements=primera_serie.values
-
-plt.interactive(False)
-plt.plot(years,measurements)
-plt.show(block=True)
-data_frame.plot()
-#print(data_frame)
 
 
 
