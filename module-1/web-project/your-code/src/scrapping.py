@@ -42,24 +42,47 @@ def get_leyes(leyes_grupos):
     for grupo in leyes_grupos:
         leyes_html = grupo[0].find_all('li')
         for ley in leyes_html:
-            ley=ley.text.split(").")[0]
+            ley=ley.text.split(").")[0].strip()
             leyes.append(ley)
     return leyes
 
+def get_year(ley):
+    year=ley.split(",")[0][-4:]
+    return year
+
+def get_tipo_ley(ley):
+    nombre_ley=ley.split(",")[0]
+    len_nombre_ley=len(nombre_ley)
+    tipo_ley=nombre_ley[:(len_nombre_ley-7)]
+    return tipo_ley
+
+def get_nombre_ley(ley):
+    nombre_ley = ley.split(",")[0]
+    return nombre_ley
+
 url='http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas/LeyesAprob?_piref73_1335447_73_1335446_1335446.next_page=/wc/busquedasLeyesAprobadas&anoLey=1979&selectLey=tituloListadoTodasLeyes'
-tipos_leyes=leyes = ['capaLeyOrganica', 'capaLey', 'capaRealDecretoLey', 'capaRealDecretoLeg']
 
-links_leyes=get_links_leyes(url)
-html_leyes=get_html_leyes(links_leyes)
+def Extract(url,path):
+    tipos_leyes=leyes = ['capaLeyOrganica', 'capaLey', 'capaRealDecretoLey', 'capaRealDecretoLeg']
 
-#html_leyes=get_html_leyes([r'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas/LeyesAprob?_piref73_1335447_73_1335446_1335446.next_page=/wc/busquedasLeyesAprobadas&anoLey=2019&selectLey=tituloListadoTodasLeyes'])
-leyes=[]
-for html in html_leyes:
-    leyes_grupos=get_leyes_grupos(html,tipos_leyes)
-    leyes_anio=get_leyes(leyes_grupos)
-    leyes.append(leyes_anio)
+    links_leyes=get_links_leyes(url)
+    html_leyes=get_html_leyes(links_leyes)
 
-for ley in leyes:
-    for ley2 in ley:
-        print(ley2)
+    #html_leyes=get_html_leyes([r'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas/LeyesAprob?_piref73_1335447_73_1335446_1335446.next_page=/wc/busquedasLeyesAprobadas&anoLey=2019&selectLey=tituloListadoTodasLeyes'])
+    leyes=[]
+    for html in html_leyes:
+        leyes_grupos=get_leyes_grupos(html,tipos_leyes)
+        leyes_anio=get_leyes(leyes_grupos)
+        leyes.append(leyes_anio)
+
+    file=open(path + "\\leyes.txt",'a',encoding='UTF-8')
+    file.write('NOMBRE_LEY;AÑO;TIPO_LEY;TITULO_LEY\n')
+
+    for ley in leyes:
+        for ley2 in ley:
+            year=get_year(ley2)
+            tipo_ley=get_tipo_ley(ley2)
+            nombre_ley=get_nombre_ley(ley2)
+            ley2=ley2.replace(";",",")
+            file.write(f'{nombre_ley};{year};{tipo_ley};{ley2}\n')
 
