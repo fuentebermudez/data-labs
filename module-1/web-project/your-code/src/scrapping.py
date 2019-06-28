@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 
 
 def get_links_leyes(url_parlamento):
+    #Obtiene los links a las leyes promulgadas en cada uno de los años.
     url_todas_leyes = '&selectLey=tituloListadoTodasLeyes'
 
     html = rq.get(url_parlamento)
@@ -19,7 +20,7 @@ def get_links_leyes(url_parlamento):
     return links_leyes
 
 def get_html_leyes(links):
-
+    #Obtiene el html de la página en la que aparecen las leyes promulgadas en un año concreto.
     html_leyes = []
     for link in links:
         print(link)
@@ -29,6 +30,7 @@ def get_html_leyes(links):
     return html_leyes
 
 def get_leyes_grupos(html_ley_anio,tipos_leyes):
+    #Agrupamos las leyes en grupos en función del tipo de norma al que pertenezcan.
     soup=BeautifulSoup(html_ley_anio,'html.parser')
     leyes_tipo=[]
     for grupo in tipos_leyes:
@@ -37,6 +39,7 @@ def get_leyes_grupos(html_ley_anio,tipos_leyes):
     return leyes_tipo
 
 def get_leyes(leyes_grupos):
+    #Obtenemos las leyes de cada uno de los grupos formados en función del tipo de norma.
     leyes=[]
 
     for grupo in leyes_grupos:
@@ -47,10 +50,12 @@ def get_leyes(leyes_grupos):
     return leyes
 
 def get_year(ley):
+    #Extrae el año de promulgación de una ley.
     year=ley.split(",")[0][-4:]
     return year
 
 def get_tipo_ley(ley):
+    #Extrae el tipo de ley al que pertenece una ley.
     nombre_ley=ley.split(",")[0]
     len_nombre_ley=len(nombre_ley)
     tipo_ley=nombre_ley[:(len_nombre_ley-7)]
@@ -60,15 +65,18 @@ def get_nombre_ley(ley):
     nombre_ley = ley.split(",")[0]
     return nombre_ley
 
-url='http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas/LeyesAprob?_piref73_1335447_73_1335446_1335446.next_page=/wc/busquedasLeyesAprobadas&anoLey=1979&selectLey=tituloListadoTodasLeyes'
-
 def Extract(url,path):
+    '''
+
+    :param url:La URL del congreso
+    :param path: El path del archivo csv en el que vamos a guardar las leyes extraídas de la web
+    :return:
+    '''
     tipos_leyes=leyes = ['capaLeyOrganica', 'capaLey', 'capaRealDecretoLey', 'capaRealDecretoLeg']
 
     links_leyes=get_links_leyes(url)
     html_leyes=get_html_leyes(links_leyes)
 
-    #html_leyes=get_html_leyes([r'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Iniciativas/LeyesAprob?_piref73_1335447_73_1335446_1335446.next_page=/wc/busquedasLeyesAprobadas&anoLey=2019&selectLey=tituloListadoTodasLeyes'])
     leyes=[]
     for html in html_leyes:
         leyes_grupos=get_leyes_grupos(html,tipos_leyes)
