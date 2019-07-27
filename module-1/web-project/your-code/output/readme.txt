@@ -1,1 +1,0 @@
-En esta carpeta se almacenan las nubes de palabras.

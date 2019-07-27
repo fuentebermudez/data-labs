@@ -1,1 +1,0 @@
-En esta carpeta se almacenan temporalmente los datos extraídos de la web del Congreso.
