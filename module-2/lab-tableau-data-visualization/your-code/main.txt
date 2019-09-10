@@ -1,1 +1,3 @@
 https://public.tableau.com/profile/miguel.angel.de.la.fuente.bermudez#!/vizhome/lab-tableau-data-visualization_15681177652960/Dashboard1?publish=yes
+
+https://public.tableau.com/profile/miguel.angel.de.la.fuente.bermudez#!/vizhome/World_statistics/GDPperCapita?publish=yes
