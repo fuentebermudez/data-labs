@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
@@ -11,10 +12,7 @@ def train_and_evaluate(clf, X_train, y_train):
 
     print("Coefficient of determination on training set:", clf.score(X_train, y_train))
 
-    # create a k-fold croos validation iterator of k=5 folds
-    #cv = KFold(X_train.shape[0], 5, shuffle=True, random_state=33)
-    #scores = cross_val_score(clf, X_train, y_train, cv=cv)
-    #print("Average coefficient of determination using 5-fold crossvalidation:", np.mean(scores))
+    return clf
 
 train_path="..\data\cars_train.csv"
 submision_path="..\data\cars_test.csv"
@@ -36,7 +34,19 @@ X_train, X_test, Y_train,Y_test=train_test_split(X,y,test_size=0.33,random_state
 
 clf = LinearRegression(normalize=True)
 
-train_and_evaluate(clf,X_train, Y_train)
+clf=train_and_evaluate(clf,X_train, Y_train)
+
+ids=cars_prices_test['Id']
+X_submission=cars_prices_test_t[PARAMETROS]
+
+X_submission.fillna(method='ffill',inplace=True)
+
+predict=pd.Series(reg.predict(X_submission))
+
+submision=pd.concat([ids, predict], axis=1)
+submision.columns=['id','price']
+
+submision.to_csv(path_or_buf='../output/submision.csv',header=True,index=False)
 
 
 
