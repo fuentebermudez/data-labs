@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 
 import Transformer as T
 import Extract as e
+import Submission as s
 
 def train_and_evaluate(clf, X_train, y_train):
     clf.fit(X_train, y_train)
@@ -36,19 +37,8 @@ clf = LinearRegression(normalize=True)
 
 clf=train_and_evaluate(clf,X_train, Y_train)
 
-ids=cars_prices_test['Id']
-X_submission=cars_prices_test_t[PARAMETROS]
-
-X_submission.fillna(method='ffill',inplace=True)
-
-predict=pd.Series(reg.predict(X_submission))
-
-submision=pd.concat([ids, predict], axis=1)
-submision.columns=['id','price']
-
-submision.to_csv(path_or_buf='../output/submision.csv',header=True,index=False)
-
-
+ids = cars_prices_test['Id']
+s.create_submission(clf,ids,cars_prices_test_t[PARAMETROS])
 
 
 
